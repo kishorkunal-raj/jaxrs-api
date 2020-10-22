@@ -15,9 +15,41 @@ jdk:
   - openjdk14
   - openjdk15
 
-arch:
-  - amd64
-  - ppc64le
+matrix:
+  include:
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: oraclejdk8
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: oraclejdk9
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: oraclejdk11
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: openjdk8
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: openjdk9
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: openjdk10
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: openjdk11
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: openjdk12
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: openjdk13
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: openjdk14
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: openjdk15
 
 cache:
   directories:
@@ -25,7 +57,7 @@ cache:
 
 install:
   - cd $TRAVIS_BUILD_DIR/jaxrs-api
-  - mvn install -Pstaging -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - if [[ "${TRAVIS_CPU_ARCH}" == "ppc64le" ]]; then mvn install -Pstaging -DskipTests=true -B -V; else mvn install -Pstaging -DskipTests=true -Dmaven.javadoc.skip=true -B -V; fi
   - cd $TRAVIS_BUILD_DIR/examples
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
   - cd $TRAVIS_BUILD_DIR/jaxrs-spec
